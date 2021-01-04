@@ -1,7 +1,7 @@
 ## System and generated files
 .idea
+.vscode
 .DS_Store
-.sass-cache
 
 ## Directories
 log/
@@ -9,5 +9,4 @@ node_modules/
 bower_components/
 
 ## Files
-result.xml
 npm-debug.log

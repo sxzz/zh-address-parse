@@ -1,13 +1,9 @@
-/**
- * Application entry point
- */
-
-// Load application styles
-import 'styles/index.scss';
-import AddressParse from './lib/address-parse';
 import $ from 'jquery';
 
-const parse = () => {
+import AddressParse from '../lib/address-parse';
+import './index.scss';
+
+(() => {
   let type = 0;
   const onTextAreaBlur = e => {
     const address = e.target.value;
@@ -23,7 +19,7 @@ const parse = () => {
         .join('')}</ul>`
     );
   };
-  $('#addressContent').bind('input propertychange', onTextAreaBlur);
+  $('#addressContent').on('input propertychange', onTextAreaBlur);
 
   $('#addressList li').on('click', e => {
     $('#addressContent').val(e.target.innerText);
@@ -31,9 +27,7 @@ const parse = () => {
   });
 
   $('#select').val(type);
-  $('#select').change(e => {
+  $('#select').on('change', e => {
     type = Number(e.target.value);
   });
-};
-
-parse();
+})();

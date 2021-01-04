@@ -1,12 +1,12 @@
 # China's delivery address parse
 
-## New Feature
+Fork from [ldwonday/zh-address-parse](https://github.com/ldwonday/zh-address-parse)
 
-> 增加自定义解析[国家统计局数据](http://www.mca.gov.cn/article/sj/xzqh/2020/2020/2020112010001.html)，数据更新至 2020-11-20，代码：[https://github.com/ldwonday/zh-address-parse/blob/master/app/lib/getMcaGovData.js](https://github.com/ldwonday/zh-address-parse/blob/master/app/lib/getMcaGovData.js)
+数据更新至 [国家统计局数据](http://www.mca.gov.cn/article/sj/xzqh/2020/2020/2020112010001.html) 2020-11-20
 
 ## Preview
 
-[Test page](https://ldwonday.github.io/zh-address-parse/)
+[Demo](https://sxzz.github.io/zh-address-parse/)
 
 ## Syntax
 
@@ -21,14 +21,6 @@ option 可选参数属性列表
 | nameMaxLength | 中文名最大长度 | Number | 否       | 4      |
 
 ## Usage
-
-> npm
-
-```sh
-npm i zh-address-parse -s
-
-import AddressParse from 'zh-address-parse'
-```
 
 > import
 
@@ -45,53 +37,18 @@ const parseResult = AddressParse('your address', options);
 // The parseResult is an object contain { province: '', name: '', city: '', area: '', detail: '', phone: '', postalCode: '' }
 ```
 
-> script 引入
-
-```html
-<script async defer src="./zh-address-parse.min.js"></script>
-<script>
-  const parse = () => {
-    const onTextAreaBlur = e => {
-      const address = e.target.value;
-      const parseResult = window.ZhAddressParse(address, {
-        type: 0,
-        textFilter: ['电話', '電話', '聯系人'],
-      });
-      // The parseResult is an object contain { province: '', name: '', city: '', area: '', detail: '', phone: '', postalCode: '' }
-      console.log(parseResult);
-      $('#result').empty();
-      $('#result').append(
-        `<ul>${Object.entries(parseResult)
-          .map(([k, v]) => `<li>${k}：${v}</li>`)
-          .join('')}</ul>`
-      );
-    };
-    $('#addressContent').bind('input propertychange', onTextAreaBlur);
-
-    $('#addressList li').on('click', e => {
-      $('#addressContent').val(e.target.innerText);
-      $('#addressContent')[0].dispatchEvent(new Event('input'));
-    });
-  };
-
-  parse();
-</script>
-```
-
 ## Setup
 
 Install dependencies
 
 ```sh
-$ npm install
+$ pnpm i --shamefully-hoist
 ```
 
 ## Development
 
-Run the local webpack-dev-server with livereload and autocompile on [http://localhost:8080/](http://localhost:8080/)
-
 ```sh
-$ npm run dev
+$ pnpm docs:dev
 ```
 
 ## Deployment
@@ -99,18 +56,5 @@ $ npm run dev
 Build the current application
 
 ```sh
-$ npm run build
+$ pnpm lib:build
 ```
-
-## Donate
-
-> 您的支持是我前进的动力，更好的支持开源事业！~
-
-<span><img src="./assets/images/wechat.png" width="300" height="300"></span>
-<span><img src="./assets/images/alipay.png" width="300" height="300"></span>
-
-## Developed with Open Source Licensed [WebStorm](http://www.jetbrains.com/webstorm/)
-
-<a href="http://www.jetbrains.com/webstorm/" target="_blank">
-<img src="http://ww1.sinaimg.cn/large/005yyi5Jjw1elpp6svs2eg30k004i3ye.gif" width="240" />
-</a>

@@ -1,11 +1,9 @@
 import zhCnNames from './names';
-import addressJson from './provinceList';
+import addressJson from '../../data/all.json';
 
-const log = (...infos) => {
-  if (process.env.NODE_ENV !== 'production') {
-    console.log(...infos);
-  }
-};
+const log =
+  process.env.NODE_ENV !== 'production' ? console.log : () => undefined;
+
 const filterCity = ['行政区划'];
 addressJson.forEach(item => {
   if (item.children) {
