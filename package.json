@@ -9,6 +9,7 @@
   "typings": "index.d.ts",
   "scripts": {
     "dev:docs": "cross-env NODE_ENV=dev webpack serve --progress --config build/docs/webpack.config.dev.js",
+    "build": "pnpm run build:lib && pnpm run build:docs",
     "build:docs": "cross-env NODE_ENV=production webpack --progress --config build/docs/webpack.config.prod.js",
     "build:lib": "cross-env NODE_ENV=production webpack --progress --config build/lib/webpack.config.js",
     "push-release": "sh ./scripts/release.sh",
