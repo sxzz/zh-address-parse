@@ -106,7 +106,7 @@ const AddressParse = (address, options) => {
   log('获取邮编的结果 --->', address);
 
   // 地址分割，排序
-  let splitAddress = address
+  const splitAddress = address
     .split(' ')
     .filter(item => item)
     .map(item => item.trim());
@@ -204,26 +204,6 @@ const AddressParse = (address, options) => {
     area: (area && area.name) || '',
     detail: (detail && detail.length > 0 && detail.join('')) || '',
   });
-};
-
-/**
- * 按照省市区县镇排序
- * @param splitAddress
- * @returns {*[]}
- */
-const sortAddress = splitAddress => {
-  const result = [];
-  const getIndex = str => {
-    return splitAddress.findIndex(item => item.indexOf(str) !== -1);
-  };
-  ['省', '市', '区', '县', '镇'].forEach(item => {
-    let index = getIndex(item);
-    if (index !== -1) {
-      result.push(splitAddress.splice(index, 1)[0]);
-    }
-  });
-
-  return [...result, ...splitAddress];
 };
 
 /**

@@ -16,9 +16,13 @@ module.exports = {
     libraryTarget: 'umd', // 定义打包方式Universal Module Definition,同时支持在CommonJS、AMD和全局变量使用
   },
   module: {
-    rules: [
-      { test: /\.js$/, loader: 'babel-loader', exclude: /(node_modules)/ },
-    ],
+    rules: [{ test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ }],
   },
   plugins: [new CleanWebpackPlugin()],
+  cache: {
+    type: 'filesystem',
+    buildDependencies: {
+      config: [__filename],
+    },
+  },
 };
