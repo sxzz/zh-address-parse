@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.1](https://github.com/sxzz/zh-address-parse/compare/v1.4.0...v1.4.1) (2021-07-09)
+
 ## [1.4.0](https://github.com/sxzz/zh-address-parse/compare/v1.3.3...v1.4.0) (2021-07-09)
 
 
