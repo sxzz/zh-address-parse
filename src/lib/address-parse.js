@@ -72,12 +72,15 @@ log(provinces.length + cities.length + areas.length);
  * @constructor
  */
 const AddressParse = (address, options) => {
-  const { type = 0, textFilter = [], nameMaxLength = 4 } =
-    typeof options === 'object'
-      ? options
-      : typeof options === 'number'
-      ? { type: options }
-      : {};
+  const {
+    type = 0,
+    textFilter = [],
+    nameMaxLength = 4,
+  } = typeof options === 'object'
+    ? options
+    : typeof options === 'number'
+    ? { type: options }
+    : {};
 
   if (!address) {
     return {};
@@ -110,7 +113,8 @@ const AddressParse = (address, options) => {
     .split(' ')
     .filter(item => item)
     .map(item => item.trim());
-  splitAddress = sortAddress(splitAddress);
+  // 这里先不排序了，排序可能出现问题，比如：北京 北京市
+  // splitAddress = sortAddress(splitAddress)
   log('分割地址 --->', splitAddress);
 
   const d1 = new Date().getTime();
@@ -164,7 +168,7 @@ const AddressParse = (address, options) => {
 
   // 地址都解析完了，姓名应该是在详细地址里面
   if (detail && detail.length > 0) {
-    const copyDetail = [...detail];
+    const copyDetail = [...detail].filter(item => !!item);
     copyDetail.sort((a, b) => a.length - b.length);
     log('copyDetail --->', copyDetail);
     // 排序后从最短的开始找名字，没找到的话就看第一个是不是咯
@@ -481,10 +485,6 @@ const parseRegion = (fragment, hasParseResult) => {
  * @returns {string}
  */
 const judgeFragmentIsName = (fragment, nameMaxLength) => {
-  if (fragment.length > nameMaxLength) {
-    return '';
-  }
-
   if (!fragment || !/[\u4E00-\u9FA5]/.test(fragment)) {
     return '';
   }
@@ -505,14 +505,12 @@ const judgeFragmentIsName = (fragment, nameMaxLength) => {
     '姑姑',
     '舅舅',
   ];
-  if (nameCall.find(item => fragment.indexOf(item) !== -1)) {
+  if (nameCall.find(item => ~fragment.indexOf(item))) {
     return fragment;
   }
 
-  const filters = ['省', '市', '区', '镇', '乡', '街道', '乡镇'];
-  const isNotName =
-    filters.findIndex(item => fragment.indexOf(item) !== -1) !== -1;
-  if (isNotName) {
+  const filters = ['街道', '乡镇'];
+  if (~filters.findIndex(item => ~fragment.indexOf(item))) {
     return '';
   }
 
@@ -521,7 +519,7 @@ const judgeFragmentIsName = (fragment, nameMaxLength) => {
   if (
     fragment.length <= nameMaxLength &&
     fragment.length > 1 &&
-    zhCnNames.indexOf(nameFirst) !== -1
+    ~zhCnNames.indexOf(nameFirst)
   ) {
     return fragment;
   }
@@ -542,7 +540,8 @@ const filterPhone = address => {
   address = address.replace(/(\d{4}) \d{4} \d{4}/g, '$1$2$3');
   address = address.replace(/(\d{4})/g, '$1');
 
-  const mobileReg = /(\d{7,12})|(\d{3,4}-\d{6,8})|(86-[1][0-9]{10})|(86[1][0-9]{10})|([1][0-9]{10})/g;
+  const mobileReg =
+    /(\d{7,12})|(\d{3,4}-\d{6,8})|(86-[1][0-9]{10})|(86[1][0-9]{10})|([1][0-9]{10})/g;
   const mobile = mobileReg.exec(address);
   if (mobile) {
     phone = mobile[0];
